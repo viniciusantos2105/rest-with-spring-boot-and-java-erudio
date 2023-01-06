@@ -1,13 +1,14 @@
 package br.com.erudio;
 
+import lombok.Getter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestWithSpringBootAndJavaErudioApplication {
+public class Startup {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestWithSpringBootAndJavaErudioApplication.class, args);
+		SpringApplication.run(Startup.class, args);
 	}
 
 }
