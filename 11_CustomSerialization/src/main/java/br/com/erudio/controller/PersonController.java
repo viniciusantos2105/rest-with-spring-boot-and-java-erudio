@@ -13,39 +13,40 @@ import java.awt.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/person/v1")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
     @Autowired
     private PersonService service;
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonVO findByID(@PathVariable(value = "id") Long id) {
-        return service.findByID(id);
+    @GetMapping( produces = { MediaType.APPLICATION_JSON_VALUE})
+    public List<PersonVO> findAll() {
+        return service.findAll();
     }
 
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PersonVO> listAll() {
-        return service.listAll();
+    @GetMapping(value = "/{id}",
+            produces = { MediaType.APPLICATION_JSON_VALUE})
+    public PersonVO findById(@PathVariable(value = "id") Long id) {
+        return service.findById(id);
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonVO create(@RequestBody PersonVO person){
-        return service.createPerson(person);
+    @PostMapping(
+            consumes = { MediaType.APPLICATION_JSON_VALUE,},
+            produces = {  MediaType.APPLICATION_JSON_VALUE })
+    public PersonVO create(@RequestBody PersonVO person) {
+        return service.create(person);
     }
 
-    @PostMapping(value = "/v2/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonVOV2 createV2(@RequestBody PersonVOV2 person){
-        return service.createPersonV2(person);
+    @PutMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public PersonVO update(@RequestBody PersonVO person) {
+        return service.update(person);
     }
 
-    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonVO update(@RequestBody PersonVO person){
-        return service.updatePerson(person);
-    }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

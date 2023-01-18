@@ -14,9 +14,10 @@
 	<name>rest-with-spring-boot-and-java-erudio</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>18.0.2.1</java.version>
-		<maven.compiler.source>18.0.2.1</maven.compiler.source>
-		<maven.compiler.target>18.0.2.1</maven.compiler.target>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,7 +35,12 @@
 			<artifactId>dozer-core</artifactId>
 			<version>6.4.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-mxj</artifactId>
@@ -46,6 +52,14 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
