@@ -21,16 +21,18 @@ public class PersonService {
 
     @Autowired
     private PersonRepository repository;
-
-
     public List<PersonVO> listAll(){
-        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        var persons = DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+        persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findByID(p.getKey())).withSelfRel()));
+        return persons;
     }
 
     public PersonVO createPerson(PersonVO person){
         logger.info("Creating person");
         var entity = DozerMapper.parseObject(person, Person.class);
-        return DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findByID(person.getKey())).withSelfRel());
+        return vo;
     }
 
     public PersonVO updatePerson(PersonVO person){
@@ -40,7 +42,9 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findByID(person.getKey())).withSelfRel());
+        return vo;
     }
 
     public void delete(Long id){
@@ -52,7 +56,7 @@ public class PersonService {
     public PersonVO findByID(Long id){
         logger.info("Finding one person!");
         var entity = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        PersonVO vo = DozerMapper.parseObject(entity, PersonVO.class);
+        var vo = DozerMapper.parseObject(entity, PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findByID(id)).withSelfRel());
         return vo;
     }
