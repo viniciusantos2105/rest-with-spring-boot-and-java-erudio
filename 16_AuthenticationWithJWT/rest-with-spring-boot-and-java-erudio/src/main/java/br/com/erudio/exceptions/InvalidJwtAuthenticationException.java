@@ -1,14 +1,16 @@
 package br.com.erudio.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException{
-	
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public class InvalidJwtAuthenticationException extends AuthenticationException
+{
 	private static final long serialVersionUID = 1L;
-	
-	public ResourceNotFoundException() {
-		super("Não existe objeto com este ID");
+
+	public InvalidJwtAuthenticationException(String ex)
+	{
+		super(ex);
 	}
 }
