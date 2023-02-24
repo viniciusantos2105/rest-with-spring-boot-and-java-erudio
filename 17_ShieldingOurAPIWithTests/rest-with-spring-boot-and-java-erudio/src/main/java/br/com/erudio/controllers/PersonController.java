@@ -97,8 +97,7 @@ public class PersonController
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
 			}
 	)
-	public PersonVO update(@PathVariable(value = "id") Long id, @RequestBody PersonVO person)
-	{
+	public PersonVO update(@PathVariable(value = "id") Long id, @RequestBody PersonVO person) {
 		return service.update(id, person);
 	}
 

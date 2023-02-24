@@ -102,8 +102,9 @@ public class PersonController {
 	public PersonVO create(@RequestBody PersonVO person) { return service.create(person); }
 
 
-	@PutMapping(value = "/update/{id}", consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
-								 produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+	@PutMapping(
+			consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  },
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
 	@Operation(summary = "Updates a Person",
 			description = "Updates a Person by passing in a JSON, XML or YML representation of the person!",
 			tags = {"People"},
@@ -117,8 +118,8 @@ public class PersonController {
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
 			}
 	)
-	public PersonVO update(@PathVariable(value = "id") Long id, @RequestBody PersonVO person) {
-		return service.update(id, person);
+	public PersonVO update(@RequestBody PersonVO person) {
+		return service.update(person);
 	}
 
 	@DeleteMapping(value = "/{id}")

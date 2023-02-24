@@ -55,16 +55,16 @@ import java.util.logging.Logger;
 		return vo;
 	}
 
-	public PersonVO update(Long id, PersonVO person) {
+	public PersonVO update(PersonVO person) {
 		if (person == null)
 			throw new RequiredObjectIsNullException();
 
 		logger.info("Updating one person!");
 
-		var entity = repository.findById(id)
+		var entity = repository.findById(person.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-		entity.setId(id);
+		entity.setId(person.getKey());
 		entity.setFirstName(person.getFirstName());
 		entity.setLastName(person.getLastName());
 		entity.setAddress(person.getAddress());
