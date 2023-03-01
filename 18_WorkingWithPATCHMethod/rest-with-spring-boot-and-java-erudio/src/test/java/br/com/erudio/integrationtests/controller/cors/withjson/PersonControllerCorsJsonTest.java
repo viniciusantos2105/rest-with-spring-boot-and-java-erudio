@@ -78,7 +78,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.body(person)
 					.when()
-					.post()
+					.post("/create")
 				.then()
 					.statusCode(200)
 						.extract()
@@ -113,7 +113,7 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.body(person)
 				.when()
-				.post()
+				.put()
 				.then()
 				.statusCode(200)
 				.extract()
@@ -192,5 +192,6 @@ public class PersonControllerCorsJsonTest extends AbstractIntegrationTest {
 		person.setLastName("Piquet");
 		person.setAddress("Brasília - DF - Brasil");
 		person.setGender("Male");
+		person.setEnabled(true);
 	}
 }
