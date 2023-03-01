@@ -1,13 +1,20 @@
 package br.com.erudio.services;
 
 import br.com.erudio.controllers.BookController;
+import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.vo.v1.BookVO;
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,25 +24,29 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
-public class BookServices
-{
+public class BookServices {
 	private Logger logger = Logger.getLogger(BookServices.class.getName());
 
 	@Autowired
 	private BookRepository repository;
 
-	public List<BookVO> findAll()
-	{
+	@Autowired
+	PagedResourcesAssembler<BookVO> assembler;
+
+	public PagedModel<EntityModel<BookVO>> findAll(Pageable pageable) {
 
 		logger.info("Finding all book!");
 
-		var books = DozerMapper.parseListObjects(repository.findAll(), BookVO.class);
-		books.stream().forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
-		return books;
+		var bookPage = repository.findAll(pageable);
+
+		var bookVosPage = bookPage.map(p -> DozerMapper.parseObject(p, BookVO.class));
+		bookVosPage.map(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
+
+		Link link = linkTo(methodOn(BookController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
+		return assembler.toModel(bookVosPage, link);
 	}
 
-	public BookVO findById(Long id)
-	{
+	public BookVO findById(Long id) {
 
 		logger.info("Finding one book!");
 
@@ -46,8 +57,7 @@ public class BookServices
 		return vo;
 	}
 
-	public BookVO create(BookVO book)
-	{
+	public BookVO create(BookVO book) {
 		if (book == null)
 			throw new RequiredObjectIsNullException();
 
@@ -60,8 +70,7 @@ public class BookServices
 		return vo;
 	}
 
-	public BookVO update(BookVO book)
-	{
+	public BookVO update(BookVO book) {
 
 		if (book == null)
 			throw new RequiredObjectIsNullException();
@@ -81,8 +90,7 @@ public class BookServices
 		return vo;
 	}
 
-	public void delete(Long id)
-	{
+	public void delete(Long id) {
 		logger.info("Deleting one book!");
 
 		var entity = repository.findById(id)
