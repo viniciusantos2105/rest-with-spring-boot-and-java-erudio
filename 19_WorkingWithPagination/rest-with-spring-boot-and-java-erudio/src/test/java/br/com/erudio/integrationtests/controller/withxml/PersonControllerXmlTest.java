@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import br.com.erudio.integrationtests.vo.pagedmodels.PagedModelPerson;
 import br.com.erudio.integrationtests.wrappers.WrapperPersonVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -252,6 +253,7 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 		var content = given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_XML)
 				.accept(TestConfigs.CONTENT_TYPE_XML)
+				.queryParams("page", 3, "size", 10, "direction", "asc")
 					.when()
 					.get("all")
 				.then()
@@ -260,8 +262,8 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 						.body()
 							.asString();
 
-		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
-		var people = wrapper.getPersonEmbeddedVO().getPersons();
+		PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+		var people = wrapper.getContent();
 
 		PersonVO personOne = people.get(0);
 
@@ -272,14 +274,14 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 		assertNotNull(personOne.getGender());
 		assertTrue(personOne.getEnabled());
 
-		assertEquals(1, personOne.getId());
+		assertEquals(835, personOne.getId());
 
-		assertEquals("Vini", personOne.getFirstName());
-		assertEquals("Jesus", personOne.getLastName());
-		assertEquals("Salvador", personOne.getAddress());
+		assertEquals("Alexis", personOne.getFirstName());
+		assertEquals("Mullally", personOne.getLastName());
+		assertEquals("0098 Rigney Center", personOne.getAddress());
 		assertEquals("Male", personOne.getGender());
 
-		PersonVO personThird = people.get(1);
+		PersonVO personThird = people.get(3);
 
 		assertNotNull(personThird.getId());
 		assertNotNull(personThird.getFirstName());
@@ -288,11 +290,11 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 		assertNotNull(personThird.getGender());
 		assertTrue(personThird.getEnabled());
 
-		assertEquals(3, personThird.getId());
+		assertEquals(843, personThird.getId());
 
-		assertEquals("Mila", personThird.getFirstName());
-		assertEquals("Carmo", personThird.getLastName());
-		assertEquals("Salvador", personThird.getAddress());
+		assertEquals("Alison", personThird.getFirstName());
+		assertEquals("Cantua", personThird.getLastName());
+		assertEquals("45 Raven Terrace", personThird.getAddress());
 		assertEquals("Female", personThird.getGender());
 	}
 

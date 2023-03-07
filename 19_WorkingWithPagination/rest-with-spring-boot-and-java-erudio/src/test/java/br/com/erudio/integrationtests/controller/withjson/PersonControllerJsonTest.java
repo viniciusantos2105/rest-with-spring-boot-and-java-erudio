@@ -246,7 +246,6 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 						.extract()
 						.body()
 							.asString();
-							//.as(new TypeRef<List<PersonVO>>() {});
 
 		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
 		var people = wrapper.getPersonEmbeddedVO().getPersons();
