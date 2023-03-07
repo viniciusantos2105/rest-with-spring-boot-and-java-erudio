@@ -24,8 +24,7 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class PersonServicesTest
-{
+class PersonServicesTest {
 	MockPerson input;
 
 	@InjectMocks private PersonServices service;
@@ -33,15 +32,13 @@ class PersonServicesTest
 	@Mock PersonRepository repository;
 
 	@BeforeEach
-	void setUpMocks() throws Exception
-	{
+	void setUpMocks() throws Exception {
 		input = new MockPerson();
 		MockitoAnnotations.openMocks(this);
 	}
 
 	@Test
-	void testFindById()
-	{
+	void testFindById() {
 		Person entity = input.mockEntity(1);
 		entity.setId(1L);
 
@@ -59,8 +56,7 @@ class PersonServicesTest
 	}
 
 	@Test
-	void testCreate()
-	{
+	void testCreate() {
 		Person entity = input.mockEntity(1);
 		entity.setId(1L);
 
@@ -86,8 +82,7 @@ class PersonServicesTest
 	}
 
 	@Test
-	void testCreateWithNullPerson()
-	{
+	void testCreateWithNullPerson() {
 		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> { service.create(null); });
 
 		String expectedMessage = "It is not allowed to persist a null object!";
@@ -97,8 +92,7 @@ class PersonServicesTest
 	}
 
 	@Test
-	void testUpdate()
-	{
+	void testUpdate() {
 		Person entity = input.mockEntity(1);
 
 		Person persisted = entity;
@@ -124,8 +118,7 @@ class PersonServicesTest
 	}
 
 	@Test
-	void testUpdateWithNullPerson()
-	{
+	void testUpdateWithNullPerson() {
 		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> { service.update(null); });
 
 		String expectedMessage = "It is not allowed to persist a null object!";
@@ -135,8 +128,7 @@ class PersonServicesTest
 	}
 
 	@Test
-	void testDelete()
-	{
+	void testDelete() {
 		Person entity = input.mockEntity(1);
 		entity.setId(1L);
 

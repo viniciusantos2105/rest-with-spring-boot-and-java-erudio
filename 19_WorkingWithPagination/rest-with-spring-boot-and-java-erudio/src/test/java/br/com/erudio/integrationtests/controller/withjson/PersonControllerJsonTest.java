@@ -285,6 +285,43 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 
 	@Test
 	@Order(7)
+	public void testFindByName() throws JsonMappingException, JsonProcessingException{
+
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.pathParam("firstName", "vin")
+				.queryParams("page", 0, "size", 1, "direction", "asc")
+				.when()
+				.get("findPersonsByName/{firstName}")
+				.then()
+				.statusCode(200)
+				.extract()
+				.body()
+				.asString();
+
+		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
+		var people = wrapper.getPersonEmbeddedVO().getPersons();
+
+		PersonVO personOne = people.get(0);
+
+		assertNotNull(personOne.getId());
+		assertNotNull(personOne.getFirstName());
+		assertNotNull(personOne.getLastName());
+		assertNotNull(personOne.getAddress());
+		assertNotNull(personOne.getGender());
+		assertFalse(personOne.getEnabled());
+
+		assertEquals(563, personOne.getId());
+
+		assertEquals("Devinne", personOne.getFirstName());
+		assertEquals("Pim", personOne.getLastName());
+		assertEquals("4 Talmadge Road", personOne.getAddress());
+		assertEquals("Female", personOne.getGender());
+
+	}
+
+	@Test
+	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
