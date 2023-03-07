@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import br.com.erudio.integrationtests.wrappers.WrapperPersonVO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -258,9 +259,9 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
 						.extract()
 						.body()
 							.asString();
-							//.as(new TypeRef<List<PersonVO>>() {});
 
-		List<PersonVO> people = objectMapper.readValue(content, new TypeReference<List<PersonVO>>() {});
+		WrapperPersonVO wrapper = objectMapper.readValue(content, WrapperPersonVO.class);
+		var people = wrapper.getPersonEmbeddedVO().getPersons();
 
 		PersonVO personOne = people.get(0);
 

@@ -6,6 +6,7 @@ import br.com.erudio.integrationtests.controller.withyaml.mapper.YMLMapper;
 import br.com.erudio.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.erudio.integrationtests.vo.AccountCredentialsVO;
 import br.com.erudio.integrationtests.vo.PersonVO;
+import br.com.erudio.integrationtests.wrappers.WrapperPersonVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -277,7 +278,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	@Order(6)
 	public void testFindAll() throws JsonMappingException, JsonProcessingException{
 
-		var content  = given().spec(specification)
+		var wrapper  = given().spec(specification)
 				.config(
 						RestAssuredConfig
 								.config()
@@ -292,10 +293,9 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 					.statusCode(200)
 						.extract()
 						.body()
-							.as(PersonVO[].class, objectMapper);
-							//.as(new TypeRef<List<PersonVO>>() {});
+							.as(WrapperPersonVO.class, objectMapper);
 
-		List<PersonVO> people = Arrays.asList(content);
+		var people = wrapper.getPersonEmbeddedVO().getPersons();
 
 		PersonVO personOne = people.get(0);
 
