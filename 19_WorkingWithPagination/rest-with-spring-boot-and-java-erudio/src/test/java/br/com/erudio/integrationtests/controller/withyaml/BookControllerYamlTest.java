@@ -276,6 +276,45 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals(110.0, foundBookFive.getPrice());
 	}
 
+	@Test
+	@Order(6)
+	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
+
+		var unthreatedContent = given().spec(specification)
+				.config(
+						RestAssuredConfig
+								.config()
+								.encoderConfig(EncoderConfig.encoderConfig()
+										.encodeContentTypeAs(
+												TestConfigs.CONTENT_TYPE_YML,
+												ContentType.TEXT)))
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
+				.queryParams("page", 0, "size", 5, "direction", "asc")
+				.when()
+				.get("all")
+				.then()
+				.statusCode(200)
+				.extract()
+				.body()
+				.asString();
+
+		var content = unthreatedContent.replace("\n", "").replace("\r", "");
+
+		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/15\""));
+		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/4\""));
+		assertTrue(content.contains("rel: \"self\"    href: \"http://localhost:8888/api/book/v1/7\""));
+
+		assertTrue(content.contains("rel: \"first\"  href: \"http://localhost:8888/api/book/v1/all?direction=asc&page=0&size=5&sort=author,asc\""));
+		assertTrue(content.contains("rel: \"self\"  href: \"http://localhost:8888/api/book/v1/all?page=0&size=5&direction=asc\""));
+		assertTrue(content.contains("rel: \"next\"  href: \"http://localhost:8888/api/book/v1/all?direction=asc&page=1&size=5&sort=author,asc\""));
+		assertTrue(content.contains("rel: \"last\"  href: \"http://localhost:8888/api/book/v1/all?direction=asc&page=2&size=5&sort=author,asc\""));
+
+
+		assertTrue(content.contains("page:  size: 5  totalElements: 15  totalPages: 3  number: 0"));
+	}
+
+
 	private void mockBook() {
 		book.setTitle("Docker Deep Dive");
 		book.setAuthor("Nigel Poulton");
