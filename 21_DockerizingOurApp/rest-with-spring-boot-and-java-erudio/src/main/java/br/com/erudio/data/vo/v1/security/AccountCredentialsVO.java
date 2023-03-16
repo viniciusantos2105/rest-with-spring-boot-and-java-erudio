@@ -1,6 +1,8 @@
 package br.com.erudio.data.vo.v1.security;
 
+
 import lombok.Data;
+
 
 import java.io.Serializable;
 
