@@ -1,6 +1,5 @@
 package br.com.erudio.data.vo.v1.security;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
 import java.io.Serializable;
