@@ -23,8 +23,7 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class BookServicesTest
-{
+class BookServicesTest{
 	private MockBook input;
 
 	@InjectMocks private BookServices service;
@@ -32,15 +31,13 @@ class BookServicesTest
 	@Mock private BookRepository repository;
 
 	@BeforeEach
-	void setUpMocks() throws Exception
-	{
+	void setUpMocks() throws Exception {
 		input = new MockBook();
 		MockitoAnnotations.openMocks(this);
 	}
 
 	@Test
-	void testFindById()
-	{
+	void testFindById() {
 		Book entity = input.mockEntity(1);
 		entity.setId(1L);
 
@@ -59,8 +56,7 @@ class BookServicesTest
 	}
 
 	@Test
-	void testCreate()
-	{
+	void testCreate() {
 		Book entity = input.mockEntity(1);
 		entity.setId(1L);
 
@@ -86,8 +82,7 @@ class BookServicesTest
 	}
 
 	@Test
-	void testCreateWithNullBook()
-	{
+	void testCreateWithNullBook() {
 		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.create(null);
 		});
@@ -99,8 +94,7 @@ class BookServicesTest
 	}
 
 	@Test
-	void testUpdate()
-	{
+	void testUpdate() {
 		Book entity = input.mockEntity(1);
 
 		Book persisted = entity;
@@ -126,8 +120,7 @@ class BookServicesTest
 	}
 
 	@Test
-	void testUpdateWithNullBook()
-	{
+	void testUpdateWithNullBook() {
 		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.update(null);
 		});
@@ -139,8 +132,7 @@ class BookServicesTest
 	}
 
 	@Test
-	void testDelete()
-	{
+	void testDelete() {
 		Book entity = input.mockEntity(1);
 		entity.setId(1L);
 

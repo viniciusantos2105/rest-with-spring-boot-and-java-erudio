@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MockBook
-{
+public class MockBook {
 	public Book mockEntity()
 	{
 		return mockEntity(0);
@@ -19,8 +18,7 @@ public class MockBook
 		return mockVO(0);
 	}
 
-	public List<Book> mockEntityList()
-	{
+	public List<Book> mockEntityList() {
 		List<Book> books = new ArrayList<Book>();
 		for (int i = 0; i < 14; i++)
 		{
@@ -29,8 +27,7 @@ public class MockBook
 		return books;
 	}
 
-	public List<BookVO> mockVOList()
-	{
+	public List<BookVO> mockVOList() {
 		List<BookVO> books = new ArrayList<>();
 		for (int i = 0; i < 14; i++)
 		{
@@ -39,19 +36,17 @@ public class MockBook
 		return books;
 	}
 
-	public Book mockEntity(Integer number)
-	{
+	public Book mockEntity(Integer number) {
 		Book book = new Book();
-		book.setId(number.longValue());
 		book.setAuthor("Some Author" + number);
 		book.setLaunchDate(new Date());
 		book.setPrice(25D);
+		book.setId(number.longValue());
 		book.setTitle("Some Title" + number);
 		return book;
 	}
 
-	public BookVO mockVO(Integer number)
-	{
+	public BookVO mockVO(Integer number) {
 		BookVO book = new BookVO();
 		book.setKey(number.longValue());
 		book.setAuthor("Some Author" + number);

@@ -6,8 +6,7 @@ import br.com.erudio.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockPerson
-{
+public class MockPerson {
 	public Person mockEntity()
 	{
 		return mockEntity(0);
@@ -18,8 +17,7 @@ public class MockPerson
 		return mockVO(0);
 	}
 
-	public List<Person> mockEntityList()
-	{
+	public List<Person> mockEntityList() {
 		List<Person> persons = new ArrayList<Person>();
 		for (int i = 0; i < 14; i++)
 		{
@@ -28,8 +26,7 @@ public class MockPerson
 		return persons;
 	}
 
-	public List<PersonVO> mockVOList()
-	{
+	public List<PersonVO> mockVOList() {
 		List<PersonVO> persons = new ArrayList<>();
 		for (int i = 0; i < 14; i++)
 		{
@@ -38,8 +35,7 @@ public class MockPerson
 		return persons;
 	}
 
-	public Person mockEntity(Integer number)
-	{
+	public Person mockEntity(Integer number) {
 		Person person = new Person();
 		person.setAddress("Address Test" + number);
 		person.setFirstName("First Name Test" + number);
@@ -49,8 +45,7 @@ public class MockPerson
 		return person;
 	}
 
-	public PersonVO mockVO(Integer number)
-	{
+	public PersonVO mockVO(Integer number) {
 		PersonVO person = new PersonVO();
 		person.setAddress("Address Test" + number);
 		person.setFirstName("First Name Test" + number);
