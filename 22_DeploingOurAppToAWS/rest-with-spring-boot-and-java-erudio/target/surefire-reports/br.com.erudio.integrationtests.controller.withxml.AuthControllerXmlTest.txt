@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.erudio.integrationtests.controller.withxml.AuthControllerXmlTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.603 s - in br.com.erudio.integrationtests.controller.withxml.AuthControllerXmlTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.593 s - in br.com.erudio.integrationtests.controller.withxml.AuthControllerXmlTest
